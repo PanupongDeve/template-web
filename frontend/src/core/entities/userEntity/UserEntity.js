@@ -50,6 +50,16 @@ class UserEntityHttpImp extends UserEntityUtility {
     }
 
     login(user){}
+
+    async register(item) {
+        let response = await http.post('http://localhost:4500/api/v1/users/register', item);
+        if (response.success) {
+            const user = this.mappingObjectToEntity(response.data);
+            return user;
+        } else {
+            throw response.data
+        }
+    }
     
 }
 

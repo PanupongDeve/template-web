@@ -19,6 +19,15 @@ class UserUsecase {
             return response.error(error);
         }
     }
+
+    async register(item) {
+        try {
+            const responseData = await this.userEntity.register(item);
+            return response.success(responseData)
+        } catch (error) {
+            return response.error(error);
+        }
+    }
 }
 
 

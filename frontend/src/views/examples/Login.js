@@ -45,18 +45,20 @@ class Login extends React.Component {
   }
 
   async componentDidMount() {
-    const users = await userUseCase.findAll();
+    
 
-    console.log(users);
+
   }
 
   handleFormChange = (name) => (event) => {
     this.setState({[name]: event.target.value});
   }
 
-  handleSubmit = (event) => {
-    console.log(this.state);
+  handleSubmit = async (event) => {
     event.preventDefault();
+    const user = await userUseCase.register(this.state);
+    console.log(user);
+    
   }
 
   render() {
