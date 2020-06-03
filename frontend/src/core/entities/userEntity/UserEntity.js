@@ -1,60 +1,20 @@
 import { User } from './User';
-import { usersMock } from '../../services/mocks/usersMock';
+import { UserDtoFromHttp} from './UserDtoFromHttp'
 import { http } from '../../services/http/http';;
 
 class UserEntity {
-    create(user){}
-    findAll(){}
-    login(user){}
-    
-
-    mappingArrayToEntity(users){}
-    mappingObjectToEntity(user){}
+    register(item){}
     
 }
 
-class UserEntityUtility extends UserEntity {
 
-    mappingArrayToEntity(items = usersMock){
-        const tmp = items.map((item) => {
-            return new User(item);
-        });
-
-        return tmp;
-    }
-
-    mappingObjectToEntity(item){
-        const tmp = new User(item)
-        return tmp;
-    }
-}
-
-
-class UserEntityFromMockImp extends UserEntityUtility {
+class UserEntityHttpImp extends UserEntity {
  
-    findAll() {
-        const items = this.mappingArrayToEntity(usersMock);
-        return items
-    }
-
-    login(user){}
-    
-}
-
-class UserEntityHttpImp extends UserEntityUtility {
- 
-    async findAll() {
-        let httpitems = await http.get('http://localhost:4500/users');
-        const items = this.mappingArrayToEntity(httpitems);
-        return items
-    }
-
-    login(user){}
 
     async register(item) {
         let response = await http.post('http://localhost:4500/api/v1/users/register', item);
         if (response.success) {
-            const user = this.mappingObjectToEntity(response.data);
+            const user = new UserDtoFromHttp(response.data);
             return user;
         } else {
             throw response.data
@@ -64,7 +24,7 @@ class UserEntityHttpImp extends UserEntityUtility {
 }
 
 export {
-    UserEntityFromMockImp,
+
     UserEntityHttpImp,
     UserEntity
 }
