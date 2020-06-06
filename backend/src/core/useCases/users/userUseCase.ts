@@ -1,4 +1,4 @@
-import { UserAuth, UserEntity } from '../../entities/users/UserEntity';
+import { UserEntityFirebase, UserEntity } from '../../entities/users/UserEntity';
 import { responseHelper } from '../../helpers/respoonseHelpers';
 
 class UserUseCase {
@@ -11,7 +11,7 @@ class UserUseCase {
 
     public static getInstance(): UserUseCase {
         if (!UserUseCase.instance) {
-            UserUseCase.instance = new UserUseCase(new UserAuth());
+            UserUseCase.instance = new UserUseCase(new UserEntityFirebase());
         }
 
         return UserUseCase.instance;
@@ -20,7 +20,7 @@ class UserUseCase {
     async register(item) {
         
         try {
-            const createdUser = await this.userEntity.create(item);
+            const createdUser = await this.userEntity.createUser(item);
             return responseHelper.success(createdUser);
         } catch (error) {
             return responseHelper.error(error);

@@ -3,26 +3,19 @@ import { UserDtoFromFirebaseAuth } from './UserDtoFromFirebaseAuth';
 import { firebaseAdmin } from '../../services/firebaseAdmin/FirebaseAdmin';
 
 interface UserEntity {
-    create(item): Promise<User>;
-
-    // mappingArrayToEntity(items): User[];
-    // mappingObjectToEntity(item): User;
-}
-
-
-abstract class UserEntityUtility implements UserEntity {
-    abstract create(item);
+    createUser(item): Promise<User>;
 
 }
 
 
-class UserAuth extends UserEntityUtility {
+
+class UserEntityFirebase implements UserEntity  {
 
     getAuth() {
         return firebaseAdmin.getAuthService();
     }
 
-    async create(item): Promise<User> {
+    async createUser(item): Promise<User> {
         const auth = this.getAuth();
         const userRecord = await auth.createUser(item);
         const response = new UserDtoFromFirebaseAuth(userRecord);
@@ -32,5 +25,5 @@ class UserAuth extends UserEntityUtility {
 
 export {
     UserEntity,
-    UserAuth
+    UserEntityFirebase
 }

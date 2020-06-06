@@ -14,5 +14,6 @@ class UserDtoFromFirebaseAuth implements User {
 }
 
 export {
-    UserDtoFromFirebaseAuth
+    UserDtoFromFirebaseAuth,
+    User
 }
