@@ -1,5 +1,6 @@
 import { User } from './User';
 import { UserDtoFromFirebaseAuth } from './UserDtoFromFirebaseAuth';
+import { UserDtoFromHttpRequest } from './UserDtoFromHttpRequest';
 import { firebaseAdmin } from '../../services/firebaseAdmin/FirebaseAdmin';
 
 interface UserEntity {
@@ -17,7 +18,8 @@ class UserEntityFirebase implements UserEntity  {
 
     async createUser(item): Promise<User> {
         const auth = this.getAuth();
-        const userRecord = await auth.createUser(item);
+        const userFromHttpRequest: any = new UserDtoFromHttpRequest(item);
+        const userRecord = await auth.createUser(userFromHttpRequest);
         const response = new UserDtoFromFirebaseAuth(userRecord);
         return response
     }

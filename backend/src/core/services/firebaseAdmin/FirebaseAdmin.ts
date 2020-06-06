@@ -8,12 +8,12 @@ class FirebaseAdmin {
     private constructor() {
         this.app = admin.initializeApp({
             credential: admin.credential.applicationDefault(),
-            databaseURL: process.env.REALTIME_DATABASE_URL
+            projectId: "template-web-1e14d",
         });
     }
 
     public static getInstance(): FirebaseAdmin {
-        if (!FirebaseAdmin.instance) {
+        if (!FirebaseAdmin.instance) {  
             FirebaseAdmin.instance = new FirebaseAdmin();
         }
 
@@ -25,7 +25,7 @@ class FirebaseAdmin {
     }
 
     public getDatabase() {
-        return this.app.database();
+        return this.app.firestore();
     }
 
     public getApp() {
