@@ -5,6 +5,8 @@ interface Messager {
     message?: String;
     softDelete?: Boolean;
     createdAt?: Date;
+    updatedAt?: Date;
+    deletedAt?: Date;
 }
 
 

@@ -8,7 +8,7 @@ class FirebaseAdmin {
     private constructor() {
         this.app = admin.initializeApp({
             credential: admin.credential.applicationDefault(),
-            projectId: "template-web-1e14d",
+            projectId: process.env.FIREBASE_PROJECT_ID,
         });
     }
 

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Req, Request, HttpCode, Param, Put, Patch, Body, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Req, Request, HttpCode, Param, Put, Patch, Body, Delete, Query } from '@nestjs/common';
 import { userUseCase } from '../../core/useCases/users/userUseCase';
 import { MessagerEntityFirebase } from '../../core//entities/messagers/MessagerEntity';
 
@@ -13,12 +13,10 @@ export class UsersController {
     }
 
     @Post('/test')
-    async test(@Body() body) {
+    async test(@Body() body, @Query() query) {
         const messagerEntity = new MessagerEntityFirebase();
-
-        
-         await messagerEntity.createMessager(body);
-         const responseData  = await messagerEntity.getMessagers();
+        //  await messagerEntity.createMessager(body);
+         const responseData  = await messagerEntity.getMessagers(query);
         return responseData;
     }
 

@@ -1,8 +1,8 @@
 import { Messager } from './Messager';
 import { firebaseAdmin } from '../../services/firebaseAdmin/FirebaseAdmin';
-import { MessagerDtoForCreateFromHttpRequest } from './MessagerDtoFromHttpRequest';
-import { MessgerDtoFromFirebaseDatabase } from './MessgerDtoFromFirebaseDatabase';
-import { cloudFireStoreHelper } from '../../helpers/cloudFireStoreHelper';
+import { MessagerDtoForCreate } from './MessagerDtoForCreate';
+import { MessgerDtoForResponse } from './MessgerDtoForResponse';
+import { cloudFireStoreHelper, CloudFirestoreQueryPagination, FirebaseQueryResponse } from '../../helpers/cloudFireStoreHelper';
 
 interface MessagerEntity {
     createMessager(item): Promise<Messager>;
@@ -18,33 +18,28 @@ class MessagerEntityFirebase implements MessagerEntity {
         return messagerModel;
     }
 
-    private changeObjectToArray(object: any) {
-        
-        return Object.keys(object).map((key) => {
-            const item = object[key];
-            item.id = key
-            return item;
-        });
-    }
 
     private mappingtoArrayMessager(items): Messager[] {
         return items.map(item => {
-            return new MessgerDtoFromFirebaseDatabase(item);
+            return new MessgerDtoForResponse(item);
         })
     }
 
 
     async createMessager(item): Promise<Messager> {
-        const messager = new MessagerDtoForCreateFromHttpRequest(item);
+        const messager = new MessagerDtoForCreate(item);
         const messagerModel = this.getModel();
         const messagerSaved = await cloudFireStoreHelper.create<Messager>(messagerModel, messager);
-        return messagerSaved
+        const messagerSavedResponse = new MessgerDtoForResponse(messagerSaved);
+        return messagerSavedResponse
     }
 
-    async getMessagers(): Promise<Messager[]> {
+    async getMessagers(query): Promise<FirebaseQueryResponse<Messager[]>> {
         const messagerModel = this.getModel();
-        const messagers = await cloudFireStoreHelper.getAll<Messager>(messagerModel);
-        return messagers;
+        const { data, meta } = await cloudFireStoreHelper.getAll<Messager>(messagerModel, new CloudFirestoreQueryPagination(query));
+        const messgaersResponse = await this.mappingtoArrayMessager(data);
+        const response = new FirebaseQueryResponse<Messager[]>(meta, data)
+        return response;
 
     }
 }

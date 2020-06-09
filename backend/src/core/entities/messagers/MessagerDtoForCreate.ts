@@ -1,20 +1,24 @@
 import { Messager } from './Messager';
 
 
-class MessagerDtoForCreateFromHttpRequest implements Messager {
+class MessagerDtoForCreate implements Messager {
     name: String;
     message: String;
     softDelete: Boolean; // created by backend,
-    createdAt: Date
+    createdAt: Date;
+    updatedAt?: Date;
+    deletedAt?: Date;
 
     constructor(item: Messager) {
         this.name = item.name;
         this.message = item.message;
         this.softDelete = item.softDelete || false;
-        this.createdAt = new Date()
+        this.createdAt = new Date();
+        this.updatedAt = null;
+        this.deletedAt = null;
     }
 }
 
 export {
-    MessagerDtoForCreateFromHttpRequest
+    MessagerDtoForCreate
 }
