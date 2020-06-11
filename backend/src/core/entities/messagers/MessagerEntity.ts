@@ -6,6 +6,7 @@ import { cloudFireStoreHelper, CloudFirestoreQueryPagination, FirebaseQueryRespo
 
 interface MessagerEntity {
     createMessager(item): Promise<Messager>;
+    getMessagers(query): Promise<FirebaseQueryResponse<Messager[]>>;
 }
 
 
@@ -30,7 +31,9 @@ class MessagerEntityFirebase implements MessagerEntity {
         const messager = new MessagerDtoForCreate(item);
         const messagerModel = this.getModel();
         const messagerSaved = await cloudFireStoreHelper.create<Messager>(messagerModel, messager);
+        console.log('messagerSaved', messagerSaved);
         const messagerSavedResponse = new MessgerDtoForResponse(messagerSaved);
+        console.log('messagerSavedResponse', messagerSavedResponse);
         return messagerSavedResponse
     }
 

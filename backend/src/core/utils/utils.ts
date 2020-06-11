@@ -13,6 +13,7 @@ export const offsetGenerator = (page, limit, totalItems?) => {
 
     return {
         offset: (limit * pageCal) - limit,
-        maxPages: maxPages
+        maxPages: maxPages,
+        pageCal
     };
 }

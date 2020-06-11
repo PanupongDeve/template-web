@@ -4,7 +4,7 @@ export class CloudFirestoreQueryPagination {
     public pageNumber;
     public limit;
 
-    constructor(item?) {
+    constructor(item?: CloudFirestoreQueryPagination) {
 
         this.pageNumber = item.pageNumber ? Number(item.pageNumber): 1;
         this.limit = item.limit ? Number(item.limit) : 10;
@@ -35,8 +35,9 @@ class CloudFireStoreHelper {
     }
 
     async create<T>(model, data: T) {
-        const dataSaved: T = await model.doc().set(JSON.parse(JSON.stringify(data)));
-        return dataSaved
+        const dataForSave = JSON.parse(JSON.stringify(data));
+        const dataSaved: T = await model.doc().set(dataForSave);
+        return dataForSave
     }
 
     async getAll<T>(model, cloudFirestoreQueryPagination = new CloudFirestoreQueryPagination()) {
@@ -57,7 +58,7 @@ class CloudFireStoreHelper {
             meta: {
                 totalPages: offsetManger.maxPages,
                 limit: cloudFirestoreQueryPagination.limit,
-                pageNumber: cloudFirestoreQueryPagination.pageNumber,
+                pageNumber: offsetManger.pageCal,
             },
             data: tmp
         };
