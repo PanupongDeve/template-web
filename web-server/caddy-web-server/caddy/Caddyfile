@@ -1,0 +1,7 @@
+:80, :443, api-seed.panupong.dev {
+  	reverse_proxy * 127.0.0.1:3000
+  	encode gzip
+	log {
+		output file /var/log/access.log
+	}
+}
