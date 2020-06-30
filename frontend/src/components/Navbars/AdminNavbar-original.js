@@ -35,27 +35,7 @@ import {
   Media
 } from "reactstrap";
 
-import { userProfileUseCase } from '../../core/useCases/userProfile/UserProfileUsecase';
-
 class AdminNavbar extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      profileName: ''
-    }
-  }
-
-  componentDidMount() {
-    userProfileUseCase.setName('Panupong Chamsomboon')
-
-    this.setState({
-      profileName: userProfileUseCase.getName()
-    })
-
-    
-  }
-
   render() {
     return (
       <>
@@ -91,7 +71,7 @@ class AdminNavbar extends React.Component {
                     </span>
                     <Media className="ml-2 d-none d-lg-block">
                       <span className="mb-0 text-sm font-weight-bold">
-                        {this.state.profileName}
+                        Jessica Jones
                       </span>
                     </Media>
                   </Media>

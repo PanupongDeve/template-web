@@ -33,27 +33,7 @@ import {
 // core components
 import UserHeader from "components/Headers/UserHeader.js";
 
-import { userProfileUseCase } from '../../core/useCases/userProfile/UserProfileUsecase';
-
 class Profile extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      profileName: ''
-    }
-  }
-
-  componentDidMount() {
-    userProfileUseCase.setName('Panupong Chamsomboon')
-
-    this.setState({
-      profileName: userProfileUseCase.getName()
-    })
-
-    
-  }
-
   render() {
     return (
       <>
@@ -119,7 +99,7 @@ class Profile extends React.Component {
                   </Row>
                   <div className="text-center">
                     <h3>
-                      {this.state.profileName}
+                      Jessica Jones
                       <span className="font-weight-light">, 27</span>
                     </h3>
                     <div className="h5 font-weight-300">
