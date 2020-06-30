@@ -1,6 +1,7 @@
 
 export const offsetGenerator = (page, limit, totalItems?) => {
     const maxPages = Math.ceil(totalItems / limit);
+    let offset;
     let pageCal = null;
 
     if (page <= 0) {
@@ -11,8 +12,16 @@ export const offsetGenerator = (page, limit, totalItems?) => {
         pageCal = page;
     }
 
+    console.log(maxPages);
+
+    if (maxPages === 0) {
+        offset = 0;
+    } else {
+        offset = (limit * pageCal) - limit;
+    }
+
     return {
-        offset: (limit * pageCal) - limit,
+        offset,
         maxPages: maxPages,
         pageCal
     };

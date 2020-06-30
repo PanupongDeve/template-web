@@ -41,6 +41,7 @@ class CloudFireStoreHelper {
     }
 
     async getAll<T>(model, cloudFirestoreQueryPagination = new CloudFirestoreQueryPagination()) {
+        console.log(cloudFirestoreQueryPagination);
         const totalItems = (await model.where('softDelete', '==', false).get())._size;
         const offsetManger = offsetGenerator(cloudFirestoreQueryPagination.pageNumber, cloudFirestoreQueryPagination.limit, totalItems);
         const snapshot = await model.where('softDelete', '==', false)

@@ -35,6 +35,15 @@ class MessagerUseCase {
             return responseHelper.error(error);
         }
     }
+
+    public async getMessagerById(id) {
+        try {
+            const responseData = `getMessagerSuccess ${id}`
+            return responseHelper.success(responseData);
+        } catch (error) {
+            return responseHelper.error(error);
+        }
+    }
 }
 
 const messagerUseCase = MessagerUseCase.getInstance();
